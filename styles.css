@@ -147,9 +147,8 @@ textarea {
 }
 
 .saveButton:disabled {
-  background-color: #8e8d8d;
+  opacity: 0.5;
   border: 2px solid #bdbfbf;
-  color: #b1a9a9;
 }
 
 .inline {
@@ -181,14 +180,15 @@ textarea {
   margin-top: 30px;
 }
 
-.deleteButton {
+.delete-button {
   display: inline-block;
   flex:5%;
   float: right;
   z-index: 5;
 }
 
-.deleteButton:hover {
+.delete-button:hover {
+  transition: 1s;
   content: url('images/delete-hover.svg');
 }
 
@@ -198,11 +198,13 @@ textarea {
   width: 300px;
 }
 
-.upArrow:hover {
+.up-vote:hover {
+  transition: 1s;
   content: url('images/upvote-hover.svg');
 }
 
-.downArrow:hover {
+.down-vote:hover {
+  transition: 1s;
   content: url('images/downvote-hover.svg');
 }
 
@@ -212,13 +214,13 @@ textarea {
   margin:0;
 }
 
-.upArrow {
+.up-vote {
   display:inline-block;
   margin-bottom: 5px;
   padding-right: 20px;
 }
 
-.downArrow {
+.down-vote {
   display: inline-block;
   margin-right: 20px;
 }
