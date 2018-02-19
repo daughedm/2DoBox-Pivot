@@ -8,18 +8,19 @@ var ideaBoxContainer = document.querySelector('.list');
 var ideaString = localStorage.getItem('idea');
 var ideas = JSON.parse(ideaString);
 
-$('.secondSection').on('click', '.deleteButton', deleteIdea);
-$('.secondSection').on('click', '.upArrow', upVote);
-$('.secondSection').on('click', '.downArrow', downVote);
-$("input[type=submit]").attr('disabled','disabled');
+$('.secondSection').on('click', '.delete-button', deleteIdea);
+$('.secondSection').on('click', '.up-vote', upVote);
+$('.secondSection').on('click', '.down-vote', downVote);
 $("form").change(enable);
   
+console.log(form)
+
+
 if(ideas) {
   window.onload = oldIdeas();
   } else {
   ideas = [];
 }
-
 ideaBoxContainer.addEventListener('input', function(event) {
   saveIdeaUpdates(event);
 });
@@ -36,50 +37,41 @@ form.addEventListener('submit',function(e) {
   cloneIdea();
   form.reset();
 });
-
+// single responsibility, enables and dsiables the save button based on input fields.
 function enable() {
-  if ($('bodyInput') == " " && $('titleInput') == "") {
-    $("input[type=submit]").attr('disabled','disabled');
-  } else {
-    $("input[type=submit]").removeAttr('disabled');
-  }
+  if ($('bodyInput') !== "" && $('titleInput') !== "") {
+    removeDisableAttribute();
+}
+};
+
+function removeDisableAttribute() {
+  $("input[type=submit]").removeAttr('disabled');
 }
 
 function oldIdeas() {
-  for(i = 0; i < ideas.length; i++) {
-    createOldIdea(ideas[i]);
-  } 
-}
-
-function random(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
-function loop() {
-  var id = '';
-  for(i = 0; i < 8; i++ ) {
-  var randomNum = random(65, 90);
-  var letter = String.fromCharCode(randomNum);
-  id = letter + id;
-  }
-  return id;
+  ideas.forEach(function(value, a) {
+    prependExistingIdeas(ideas[a]);
+  })
 }
 
 function cloneIdea() {
   var boxCopy = boxTemplate.cloneNode(true);
   var ideaObject = ideaStorage();
-  boxCopy.id = ideaObject.id;
   var title = boxCopy.querySelector('.title');
   var body = boxCopy.querySelector('.example-body');
+  boxCopy.id = ideaObject.id;
   title.innerText = ideaObject.title;
   body.innerText = ideaObject.body;
   list.prepend(boxCopy);
+  disableSave()
+}
+
+function disableSave() {
   $("input[type=submit]").attr('disabled','disabled');
 }
 
-function createOldIdea(idea) {
+// single responsibiluty, needs refactoriing, prepends ideas to the ul 
+function prependExistingIdeas(idea) {
   var boxCopy = boxTemplate.cloneNode(true);
   var title = boxCopy.querySelector('.title');
   var body = boxCopy.querySelector('.example-body');
@@ -90,15 +82,15 @@ function createOldIdea(idea) {
 }
 
 function ideaStorage() {
-  var idea = {};
-
+  var idea = {
+    quality: 'swill'
+  };
   idea.title = document.querySelector('.titleInput').value;
   idea.body = document.querySelector('.bodyInput').value;
-  idea.id = loop();
+  idea.id = $.now()
   ideas.push(idea);
   var ideaString = JSON.stringify(ideas);
   localStorage.setItem('idea', ideaString);
-  return idea;
 }
 
 function deleteIdea(ev) {
@@ -111,34 +103,59 @@ function deleteIdea(ev) {
   var ideaStr = JSON.stringify(ideas);
   localStorage.setItem('idea', ideaStr);
 }
+var importance = [
+'None',
+'Low',
+'Normal', 
+'High',
+'Critical'
+];
+
+var myIndex = 2;
+var print = $(this).parent().find('.qualType');
+print.innerHTML = importance[2];
 
 function upVote() {
-  var quality = $(this).parent().find('.qualType').text();
+  myIndex = (myIndex+1)%(importance.length);
+  console.log(myIndex)
+  $(this).parent().find('.qualType').text(importance[myIndex]);
 
-  if(quality === 'swill') {
-    $(this).parent().find('.qualType').text('plausible');
-  } else {
-    $(this).parent().find('.qualType').text('genius');
-  }
+
+
+  // var currentIndex = 0;
+  // currentIndex.forEach(function () {
+
+  // })
+  // currentIndex = currentIndex;
+  // console.log(currentIndex)
+
+  // var currentImportance = $(this).parent().find('.qualType');
+  // console.log(currentImportance.text(importance[currentIndex]))
+  // currentImportance.innerHTML = importance[currentIndex];
+
 }
 
-function downVote() {
-  var quality = $(this).parent().find('.qualType').text();
 
-  if(quality === 'genius') {
-    $(this).parent().find('.qualType').text('plausible');
-  } else {
-    $(this).parent().find('.qualType').text('swill');
-  }
-}    
+
+function downVote() {
+  myIndex = (myIndex - 1)%(importance.length);
+  console.log(myIndex)
+  $(this).parent().find('.qualType').text(importance[myIndex]);  
+}
 
 function saveIdeaUpdates(ev) {
   var updatedIdea = ev.target.closest('.newIdeas');
+  console.log(updatedIdea)
   var updatedIdeaTitle = updatedIdea.querySelector('.title').innerText;
   var updatedIdeaBody = updatedIdea.querySelector('.example-body').innerText;
   var updatedIdeaId = updatedIdea.id;
-  var existingIdeasString = localStorage.getItem('idea');
-  var existingIdeasObj = JSON.parse(existingIdeasString);
+  var existingIdeasObj = JSON.parse(localStorage.getItem('idea'));
+
+// existingIdeasObj.forEach(function(value, a) {
+//   var jack = existingIdeasObj[a].id
+//   console.log(jack)
+//   })
+
 
   for(i = 0; i < existingIdeasObj.length; i++) {
   var existingIdeaId = existingIdeasObj[i].id;
@@ -148,6 +165,7 @@ function saveIdeaUpdates(ev) {
   existingIdeasObj[i].body = updatedIdeaBody;
 }
 }
+
   var newIdeaString = JSON.stringify(existingIdeasObj);
   localStorage.setItem('idea', newIdeaString);
 }
@@ -155,10 +173,10 @@ function saveIdeaUpdates(ev) {
 // search box
 $('.searchBox').on('keyup',function() {
   var ideasSearch = document.querySelectorAll('.newIdeas');
+  var searchTerm = $(this).val().toLowerCase();
   $('li').each(function() {
   $(this).attr('ideasSearch', $(this).text().toLowerCase())
   })
-  var searchTerm = $(this).val().toLowerCase();
   $('li').each(function() {
     if($(this).filter('[ideasSearch *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1) {
   $(this).show();
