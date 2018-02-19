@@ -116,31 +116,24 @@ var print = $(this).parent().find('.qualType');
 print.innerHTML = importance[2];
 
 function upVote() {
-  myIndex = (myIndex+1)%(importance.length);
-  console.log(myIndex)
+  if (myIndex < importance.length - 1) {
+    myIndex++
+  } else {
+    myIndex = 4
+  } 
   $(this).parent().find('.qualType').text(importance[myIndex]);
-
-
-
-  // var currentIndex = 0;
-  // currentIndex.forEach(function () {
-
-  // })
-  // currentIndex = currentIndex;
-  // console.log(currentIndex)
-
-  // var currentImportance = $(this).parent().find('.qualType');
-  // console.log(currentImportance.text(importance[currentIndex]))
-  // currentImportance.innerHTML = importance[currentIndex];
-
 }
 
 
 
 function downVote() {
-  myIndex = (myIndex - 1)%(importance.length);
+  if (myIndex <= 0) {
+    myIndex = 0
+  } else {
+    myIndex--
+  } 
+  $(this).parent().find('.qualType').text(importance[myIndex]);
   console.log(myIndex)
-  $(this).parent().find('.qualType').text(importance[myIndex]);  
 }
 
 function saveIdeaUpdates(ev) {
