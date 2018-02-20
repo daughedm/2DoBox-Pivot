@@ -1,8 +1,8 @@
-var boxTemplate = document.querySelector('#ideaTemplate');
+// var boxTemplate = document.querySelector('#ideaTemplate');
 var saveButton = document.querySelector('.saveButton');
 var list = document.querySelector('.secondSection ul');
-var titleInput = document.querySelector('.titleInput').value;
-var bodyInput= document.querySelector('.bodyInput').value;
+// var titleInput = document.querySelector('.titleInput').value;
+// var bodyInput= document.querySelector('.bodyInput').value;
 var form = document.forms['inputForm'];
 var ideaBoxContainer = document.querySelector('.list');
 var ideaString = localStorage.getItem('idea');
@@ -37,9 +37,10 @@ form.addEventListener('submit',function(e) {
   cloneIdea();
   form.reset();
 });
+
 // single responsibility, enables and dsiables the save button based on input fields.
 function enable() {
-  if ($('bodyInput') !== "" && $('titleInput') !== "") {
+  if ($('.bodyInput').val() !== "" && $('.titleInput').val() !== "") {
     removeDisableAttribute();
 }
 };
@@ -55,14 +56,14 @@ function oldIdeas() {
 }
 
 function cloneIdea() {
-  var boxCopy = boxTemplate.cloneNode(true);
+  var boxCopy = $('#ideaTemplate').clone(true);
   var ideaObject = ideaStorage();
-  var title = boxCopy.querySelector('.title');
-  var body = boxCopy.querySelector('.example-body');
-  boxCopy.id = ideaObject.id;
-  title.innerText = ideaObject.title;
-  body.innerText = ideaObject.body;
-  list.prepend(boxCopy);
+  console.log(ideaObject);
+  var title = $(boxCopy).find('.title').text(ideaObject.title);
+  var body = $(boxCopy).find('.example-body').text(ideaObject.body);
+  $(boxCopy).attr('id', ideaObject.id);
+  $(boxCopy).removeAttr();
+  $(list).prepend(boxCopy);
   disableSave()
 }
 
@@ -72,25 +73,28 @@ function disableSave() {
 
 // single responsibiluty, needs refactoriing, prepends ideas to the ul 
 function prependExistingIdeas(idea) {
-  var boxCopy = boxTemplate.cloneNode(true);
-  var title = boxCopy.querySelector('.title');
-  var body = boxCopy.querySelector('.example-body');
-  boxCopy.id = idea.id;
-  list.prepend(boxCopy);
-  title.innerText = idea.title;
-  body.innerText = idea.body;
+  var boxCopy = $('#ideaTemplate').clone(true);
+  var title = $(boxCopy).find('.title').text(idea.title);
+  var body = $(boxCopy).find('.example-body').text(idea.body);
+  var importance = $(boxCopy).find('.qualType').text(idea.importance);
+  $(boxCopy).attr('id', idea.id);
+  $(list).prepend(boxCopy);
+  // title.text(idea.title);
+  // body.text(idea.body);
+  // importance.text(idea.importance);
+
 }
 
 function ideaStorage() {
-  var idea = {
-    quality: 'swill'
-  };
-  idea.title = document.querySelector('.titleInput').value;
-  idea.body = document.querySelector('.bodyInput').value;
+  var idea = {}
+  idea.title = $('.titleInput').val();
+  idea.body = $('.bodyInput').val();
+  idea.importance = 'normal';
   idea.id = $.now()
   ideas.push(idea);
   var ideaString = JSON.stringify(ideas);
   localStorage.setItem('idea', ideaString);
+  return idea;
 }
 
 function deleteIdea(ev) {
@@ -122,9 +126,8 @@ function upVote() {
     myIndex = 4
   } 
   $(this).parent().find('.qualType').text(importance[myIndex]);
+  // saveVote(event);
 }
-
-
 
 function downVote() {
   if (myIndex <= 0) {
@@ -134,31 +137,33 @@ function downVote() {
   } 
   $(this).parent().find('.qualType').text(importance[myIndex]);
   console.log(myIndex)
+  // saveVote(event);
+}
+
+function saveVote(ev) {
+  var updatedIdeaId = ev.target.closest('.newIdeas').attr('id');
+  var existingIdeasObj = JSON.parse(localStorage.getItem('idea'));
+  for(i = 0; i < existingIdeasObj.length; i++) 
+    var existingIdeaId = existingIdeasObj[i].id;
+    if(existingIdeaId == updatedIdeaId) {
+    // existingIdeasObj[i].title = updatedIdeaTitle;
+    // existingIdeasObj[i].body = updatedIdeaBody;
+    existingIdeasObj[i].importance = 
+   }
 }
 
 function saveIdeaUpdates(ev) {
   var updatedIdea = ev.target.closest('.newIdeas');
-  console.log(updatedIdea)
   var updatedIdeaTitle = updatedIdea.querySelector('.title').innerText;
   var updatedIdeaBody = updatedIdea.querySelector('.example-body').innerText;
   var updatedIdeaId = updatedIdea.id;
   var existingIdeasObj = JSON.parse(localStorage.getItem('idea'));
-
-// existingIdeasObj.forEach(function(value, a) {
-//   var jack = existingIdeasObj[a].id
-//   console.log(jack)
-//   })
-
-
-  for(i = 0; i < existingIdeasObj.length; i++) {
+  for(i = 0; i < existingIdeasObj.length; i++) 
   var existingIdeaId = existingIdeasObj[i].id;
-
   if(existingIdeaId == updatedIdeaId) {
   existingIdeasObj[i].title = updatedIdeaTitle;
   existingIdeasObj[i].body = updatedIdeaBody;
 }
-}
-
   var newIdeaString = JSON.stringify(existingIdeasObj);
   localStorage.setItem('idea', newIdeaString);
 }
