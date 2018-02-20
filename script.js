@@ -91,7 +91,7 @@ function ideaStorage() {
   var idea = {}
   idea.title = $('.titleInput').val();
   idea.body = $('.bodyInput').val();
-  idea.importance = 'normal';
+  idea.importance = 'Normal';
   idea.id = $.now()
   ideas.push(idea);
   var ideaString = JSON.stringify(ideas);
@@ -109,19 +109,21 @@ function deleteIdea(ev) {
   var ideaStr = JSON.stringify(ideas);
   localStorage.setItem('idea', ideaStr);
 }
-var importance = [
-'None',
-'Low',
-'Normal', 
-'High',
-'Critical'
-];
 
-var myIndex = 2;
-var print = $(this).parent().find('.qualType');
-print.innerHTML = importance[2];
+ function arrayImportance() {
+  return [
+    'None',
+    'Low',
+    'Normal', 
+    'High',
+    'Critical'
+  ];
+}
 
 function upVote() {
+  var importance = arrayImportance()
+  var currentImportance = $(this).parent().find('.qualType').text()
+  var myIndex = importance.indexOf(currentImportance)
   if (myIndex < importance.length - 1) {
     myIndex++
   } else {
@@ -133,6 +135,9 @@ function upVote() {
 }
 
 function downVote() {
+  var importance = arrayImportance()
+  var currentImportance = $(this).parent().find('.qualType').text()
+  var myIndex = importance.indexOf(currentImportance)
   if (myIndex <= 0) {
     myIndex = 0
   } else {
@@ -144,6 +149,7 @@ function downVote() {
 }
 
 function saveVote(cardId, newImportance) {
+  var importance = arrayImportance()
   var existingIdeasObj = JSON.parse(localStorage.getItem('idea'));
   for(i = 0; i < existingIdeasObj.length; i++) {
     var existingIdeaId = existingIdeasObj[i].id;
@@ -172,7 +178,6 @@ function saveIdeaUpdates(ev) {
   localStorage.setItem('idea', newIdeaString);
 }
 
-// search box
 $('.searchBox').on('keyup',function() {
   var ideasSearch = document.querySelectorAll('.newIdeas');
   var searchTerm = $(this).val().toLowerCase();
