@@ -40,13 +40,19 @@ form.addEventListener('submit',function(e) {
 
 // single responsibility, enables and dsiables the save button based on input fields.
 function enable() {
-  if ($('.bodyInput').val() !== "" && $('.titleInput').val() !== "") {
-    removeDisableAttribute();
-}
+  if ($('.bodyInput').val() == "" && $('.titleInput').val() == "") {
+    setDisableAttribute();
+  } else {
+    removeDisableAttribute()
+  }
 };
 
 function removeDisableAttribute() {
   $("input[type=submit]").removeAttr('disabled');
+}
+
+function setDisableAttribute() {
+  $("input[type=submit").attr('disabled', '')
 }
 
 function oldIdeas() {
@@ -140,17 +146,17 @@ function downVote() {
   // saveVote(event);
 }
 
-function saveVote(ev) {
-  var updatedIdeaId = ev.target.closest('.newIdeas').attr('id');
-  var existingIdeasObj = JSON.parse(localStorage.getItem('idea'));
-  for(i = 0; i < existingIdeasObj.length; i++) 
-    var existingIdeaId = existingIdeasObj[i].id;
-    if(existingIdeaId == updatedIdeaId) {
-    // existingIdeasObj[i].title = updatedIdeaTitle;
-    // existingIdeasObj[i].body = updatedIdeaBody;
-    existingIdeasObj[i].importance = 
-   }
-}
+// function saveVote(ev) {
+//   var updatedIdeaId = ev.target.closest('.newIdeas').attr('id');
+//   var existingIdeasObj = JSON.parse(localStorage.getItem('idea'));
+//   for(i = 0; i < existingIdeasObj.length; i++) 
+//     var existingIdeaId = existingIdeasObj[i].id;
+//     if(existingIdeaId == updatedIdeaId) {
+//     // existingIdeasObj[i].title = updatedIdeaTitle;
+//     // existingIdeasObj[i].body = updatedIdeaBody;
+//     existingIdeasObj[i].importance = 
+//    }
+// }
 
 function saveIdeaUpdates(ev) {
   var updatedIdea = ev.target.closest('.newIdeas');
