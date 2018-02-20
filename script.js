@@ -12,9 +12,6 @@ $('.secondSection').on('click', '.delete-button', deleteIdea);
 $('.secondSection').on('click', '.up-vote', upVote);
 $('.secondSection').on('click', '.down-vote', downVote);
 $("form").change(enable);
-  
-console.log(form)
-
 
 if(ideas) {
   window.onload = oldIdeas();
@@ -64,7 +61,6 @@ function oldIdeas() {
 function cloneIdea() {
   var boxCopy = $('#ideaTemplate').clone(true);
   var ideaObject = ideaStorage();
-  console.log(ideaObject);
   var title = $(boxCopy).find('.title').text(ideaObject.title);
   var body = $(boxCopy).find('.example-body').text(ideaObject.body);
   $(boxCopy).attr('id', ideaObject.id);
@@ -131,8 +127,9 @@ function upVote() {
   } else {
     myIndex = 4
   } 
-  $(this).parent().find('.qualType').text(importance[myIndex]);
-  // saveVote(event);
+  var newImportance = $(this).parent().find('.qualType').text(importance[myIndex]);
+  var cardId = $(this).parents().closest('.newIdeas').attr('id')
+  saveVote(cardId, newImportance);
 }
 
 function downVote() {
@@ -141,22 +138,22 @@ function downVote() {
   } else {
     myIndex--
   } 
-  $(this).parent().find('.qualType').text(importance[myIndex]);
-  console.log(myIndex)
-  // saveVote(event);
+  var newImportance = $(this).parent().find('.qualType').text(importance[myIndex]);
+  var cardId = $(this).parents().closest('.newIdeas').attr('id')
+  saveVote(cardId, newImportance);
 }
 
-// function saveVote(ev) {
-//   var updatedIdeaId = ev.target.closest('.newIdeas').attr('id');
-//   var existingIdeasObj = JSON.parse(localStorage.getItem('idea'));
-//   for(i = 0; i < existingIdeasObj.length; i++) 
-//     var existingIdeaId = existingIdeasObj[i].id;
-//     if(existingIdeaId == updatedIdeaId) {
-//     // existingIdeasObj[i].title = updatedIdeaTitle;
-//     // existingIdeasObj[i].body = updatedIdeaBody;
-//     existingIdeasObj[i].importance = 
-//    }
-// }
+function saveVote(cardId, newImportance) {
+  var existingIdeasObj = JSON.parse(localStorage.getItem('idea'));
+  for(i = 0; i < existingIdeasObj.length; i++) {
+    var existingIdeaId = existingIdeasObj[i].id;
+    if(existingIdeaId == cardId) {
+    existingIdeasObj[i].importance = newImportance.text()
+  }
+} 
+  var newIdeaString = JSON.stringify(existingIdeasObj);
+  localStorage.setItem('idea', newIdeaString);
+}
 
 function saveIdeaUpdates(ev) {
   var updatedIdea = ev.target.closest('.newIdeas');
@@ -164,11 +161,12 @@ function saveIdeaUpdates(ev) {
   var updatedIdeaBody = updatedIdea.querySelector('.example-body').innerText;
   var updatedIdeaId = updatedIdea.id;
   var existingIdeasObj = JSON.parse(localStorage.getItem('idea'));
-  for(i = 0; i < existingIdeasObj.length; i++) 
+  for(i = 0; i < existingIdeasObj.length; i++) {
   var existingIdeaId = existingIdeasObj[i].id;
   if(existingIdeaId == updatedIdeaId) {
   existingIdeasObj[i].title = updatedIdeaTitle;
   existingIdeasObj[i].body = updatedIdeaBody;
+}
 }
   var newIdeaString = JSON.stringify(existingIdeasObj);
   localStorage.setItem('idea', newIdeaString);
