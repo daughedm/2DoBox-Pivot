@@ -178,7 +178,6 @@ function saveIdeaUpdates(ev) {
   localStorage.setItem('idea', newIdeaString);
 }
 
-// search box
 $('.searchBox').on('keyup',function() {
   var ideasSearch = document.querySelectorAll('.newIdeas');
   var searchTerm = $(this).val().toLowerCase();
