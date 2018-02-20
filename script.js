@@ -26,6 +26,8 @@ list.addEventListener('input', function(event) {
   saveIdeaUpdates(event);
 });
 
+ideaBoxContainer.addEventListener('blur', editIdea())
+list.addEventListener('blur', editIdea())
 // clone box with the user's input
 form.addEventListener('submit',function(e) {
   enable()
@@ -100,14 +102,20 @@ function ideaStorage() {
 }
 
 function deleteIdea(ev) {
-  var box = ev.target.closest('.newIdeas');
-  var id = box.id;
-  list.removeChild(box);
-  ideas = ideas.filter(function(el) {
-  return el.id !== id;
-});
-  var ideaStr = JSON.stringify(ideas);
-  localStorage.setItem('idea', ideaStr);
+  var jack = ev.target.closest('.newIdeas');
+  jack.remove()
+  for(i = 0; i < ideas.length; i++) {
+    var existingIdeaId = ideas[i].id;
+    if (existingIdeaId == jack.id) {
+        ideas.splice(i,1)
+        localStorage.setItem('idea', JSON.stringify(ideas));
+       
+}
+}
+} 
+
+function deleteLocalStorage() {
+  console.log(i)
 }
 
  function arrayImportance() {
@@ -160,7 +168,7 @@ function saveVote(cardId, newImportance) {
   var newIdeaString = JSON.stringify(existingIdeasObj);
   localStorage.setItem('idea', newIdeaString);
 }
-
+ 
 function saveIdeaUpdates(ev) {
   var updatedIdea = ev.target.closest('.newIdeas');
   var updatedIdeaTitle = updatedIdea.querySelector('.title').innerText;
@@ -177,6 +185,14 @@ function saveIdeaUpdates(ev) {
   var newIdeaString = JSON.stringify(existingIdeasObj);
   localStorage.setItem('idea', newIdeaString);
 }
+
+function editIdea() {
+  $('h2, .body-text').keydown(function(e) {
+    if (e.which === 13) {
+      $(this).blur();
+    }
+  });
+};
 
 $('.searchBox').on('keyup',function() {
   var ideasSearch = document.querySelectorAll('.newIdeas');
