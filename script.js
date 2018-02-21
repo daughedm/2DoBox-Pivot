@@ -1,8 +1,5 @@
-var list = document.querySelector('.secondSection ul');
-var form = document.forms['inputForm'];
-var ideaBoxContainer = document.querySelector('.list');
-var ideaString = localStorage.getItem('idea');
-var ideas = JSON.parse(ideaString);
+// var form = document.forms['inputForm'];
+var ideas = JSON.parse(localStorage.getItem('idea'));
 
 $('.secondSection').on('click', '.delete-button', deleteIdea);
 $('.secondSection').on('click', '.up-vote', upVote);
@@ -10,21 +7,20 @@ $('.secondSection').on('click', '.down-vote', downVote);
 $("form").change(enable);
 
 $(document).ready(oldIdeas());
+console.log($(':input').parent())
 
-ideaBoxContainer.addEventListener('input', function(event) {
-  saveIdeaUpdates(event);
-});
 
-list.addEventListener('input', function(event) {
+$('.list').on('input', function(event) {
   saveIdeaUpdates(event);
 });
 
 // clone box with the user's input
-form.addEventListener('submit',function(e) {
+$(':input').parent().on('submit',function(e) {
   enable();
   e.preventDefault();
   cloneIdea();
-  form.reset();
+  $(':input').parent().trigger('reset');
+  $('.titleInput').focus()
 });
 
 // single responsibility, enables and dsiables the save button based on input fields.
@@ -57,7 +53,7 @@ function cloneIdea() {
   var body = $(boxCopy).find('.example-body').text(ideaObject.body);
   $(boxCopy).attr('id', ideaObject.id);
   $(boxCopy).removeAttr();
-  $(list).prepend(boxCopy);
+  $('.list').prepend(boxCopy);
   disableSave();
 }
 
@@ -71,7 +67,7 @@ function prependExistingIdeas(idea) {
   var body = $(boxCopy).find('.example-body').text(idea.body);
   var importance = $(boxCopy).find('.qualType').text(idea.importance);
   $(boxCopy).attr('id', idea.id);
-  $(list).prepend(boxCopy);
+  $('.list').prepend(boxCopy);
 }
 
 function ideaStorage() {
