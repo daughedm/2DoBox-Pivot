@@ -64,7 +64,7 @@ function prependExistingIdeas(idea) {
   var boxCopy = $('#idea-template').clone(true);
   var title = $(boxCopy).find('.title').text(idea.title);
   var body = $(boxCopy).find('.example-body').text(idea.body);
-  var importance = $(boxCopy).find('.qualType').text(idea.importance);
+  var importance = $(boxCopy).find('.qual-type').text(idea.importance);
   $(boxCopy).attr('id', idea.id);
   $('.list').prepend(boxCopy);
 }
@@ -104,28 +104,28 @@ function deleteIdea(ev) {
 
 function upVote() {
   var importance = arrayImportance()
-  var currentImportance = $(this).parent().find('.qualType').text()
+  var currentImportance = $(this).parent().find('.qual-type').text()
   var myIndex = importance.indexOf(currentImportance)
   if (myIndex < importance.length - 1) {
     myIndex++
     } else {
     myIndex = 4
   } 
-  var newImportance = $(this).parent().find('.qualType').text(importance[myIndex]);
+  var newImportance = $(this).parent().find('.qual-type').text(importance[myIndex]);
   var cardId = $(this).parents().closest('.new-ideas').attr('id')
   saveVote(cardId, newImportance);
 }
 
 function downVote() {
   var importance = arrayImportance()
-  var currentImportance = $(this).parent().find('.qualType').text()
+  var currentImportance = $(this).parent().find('.qual-type').text()
   var myIndex = importance.indexOf(currentImportance)
   if (myIndex <= 0) {
     myIndex = 0
   } else {
     myIndex--
   } 
-  var newImportance = $(this).parent().find('.qualType').text(importance[myIndex]);
+  var newImportance = $(this).parent().find('.qual-type').text(importance[myIndex]);
   var cardId = $(this).parents().closest('.new-ideas').attr('id')
   saveVote(cardId, newImportance);
 }
