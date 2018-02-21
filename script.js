@@ -1,8 +1,4 @@
-// var boxTemplate = document.querySelector('#ideaTemplate');
-var saveButton = document.querySelector('.saveButton');
 var list = document.querySelector('.secondSection ul');
-// var titleInput = document.querySelector('.titleInput').value;
-// var bodyInput= document.querySelector('.bodyInput').value;
 var form = document.forms['inputForm'];
 var ideaBoxContainer = document.querySelector('.list');
 var ideaString = localStorage.getItem('idea');
@@ -13,11 +9,8 @@ $('.secondSection').on('click', '.up-vote', upVote);
 $('.secondSection').on('click', '.down-vote', downVote);
 $("form").change(enable);
 
-if(ideas) {
-  window.onload = oldIdeas();
-  } else {
-  ideas = [];
-}
+$(document).ready(oldIdeas());
+
 ideaBoxContainer.addEventListener('input', function(event) {
   saveIdeaUpdates(event);
 });
@@ -26,13 +19,10 @@ list.addEventListener('input', function(event) {
   saveIdeaUpdates(event);
 });
 
-ideaBoxContainer.addEventListener('blur', editIdea())
-list.addEventListener('blur', editIdea())
 // clone box with the user's input
 form.addEventListener('submit',function(e) {
-  enable()
+  enable();
   e.preventDefault();
-
   cloneIdea();
   form.reset();
 });
@@ -42,7 +32,7 @@ function enable() {
   if ($('.bodyInput').val() == "" && $('.titleInput').val() == "") {
     setDisableAttribute();
   } else {
-    removeDisableAttribute()
+    removeDisableAttribute();
   }
 };
 
@@ -56,7 +46,7 @@ function setDisableAttribute() {
 
 function oldIdeas() {
   ideas.forEach(function(value, a) {
-    prependExistingIdeas(ideas[a]);
+    prependExistingIdeas(value);
   })
 }
 
@@ -68,14 +58,13 @@ function cloneIdea() {
   $(boxCopy).attr('id', ideaObject.id);
   $(boxCopy).removeAttr();
   $(list).prepend(boxCopy);
-  disableSave()
+  disableSave();
 }
 
 function disableSave() {
   $("input[type=submit]").attr('disabled','disabled');
 }
 
-// single responsibiluty, needs refactoriing, prepends ideas to the ul 
 function prependExistingIdeas(idea) {
   var boxCopy = $('#ideaTemplate').clone(true);
   var title = $(boxCopy).find('.title').text(idea.title);
@@ -83,10 +72,6 @@ function prependExistingIdeas(idea) {
   var importance = $(boxCopy).find('.qualType').text(idea.importance);
   $(boxCopy).attr('id', idea.id);
   $(list).prepend(boxCopy);
-  // title.text(idea.title);
-  // body.text(idea.body);
-  // importance.text(idea.importance);
-
 }
 
 function ideaStorage() {
@@ -94,29 +79,23 @@ function ideaStorage() {
   idea.title = $('.titleInput').val();
   idea.body = $('.bodyInput').val();
   idea.importance = 'Normal';
-  idea.id = $.now()
+  idea.id = $.now();
   ideas.push(idea);
-  var ideaString = JSON.stringify(ideas);
-  localStorage.setItem('idea', ideaString);
+  setItemToLocalStorage();
   return idea;
 }
 
 function deleteIdea(ev) {
-  var jack = ev.target.closest('.newIdeas');
-  jack.remove()
+  var buttonParent = ev.target.closest('.newIdeas');
+  buttonParent.remove()
   for(i = 0; i < ideas.length; i++) {
     var existingIdeaId = ideas[i].id;
-    if (existingIdeaId == jack.id) {
-        ideas.splice(i,1)
-        localStorage.setItem('idea', JSON.stringify(ideas));
-       
-}
-}
+    if (existingIdeaId == buttonParent.id) {
+        ideas.splice(i,1);
+        setItemToLocalStorage();
+    }
+  }
 } 
-
-function deleteLocalStorage() {
-  console.log(i)
-}
 
  function arrayImportance() {
   return [
@@ -158,41 +137,33 @@ function downVote() {
 
 function saveVote(cardId, newImportance) {
   var importance = arrayImportance()
-  var existingIdeasObj = JSON.parse(localStorage.getItem('idea'));
-  for(i = 0; i < existingIdeasObj.length; i++) {
-    var existingIdeaId = existingIdeasObj[i].id;
+  for(i = 0; i < ideas.length; i++) {
+    var existingIdeaId = ideas[i].id;
     if(existingIdeaId == cardId) {
-    existingIdeasObj[i].importance = newImportance.text()
+    ideas[i].importance = newImportance.text()
   }
-} 
-  var newIdeaString = JSON.stringify(existingIdeasObj);
-  localStorage.setItem('idea', newIdeaString);
+}   
+  setItemToLocalStorage();
 }
- 
+
+function setItemToLocalStorage() {
+  localStorage.setItem('idea', JSON.stringify(ideas));
+}
+
 function saveIdeaUpdates(ev) {
   var updatedIdea = ev.target.closest('.newIdeas');
   var updatedIdeaTitle = updatedIdea.querySelector('.title').innerText;
   var updatedIdeaBody = updatedIdea.querySelector('.example-body').innerText;
   var updatedIdeaId = updatedIdea.id;
-  var existingIdeasObj = JSON.parse(localStorage.getItem('idea'));
-  for(i = 0; i < existingIdeasObj.length; i++) {
-  var existingIdeaId = existingIdeasObj[i].id;
+  for(i = 0; i < ideas.length; i++) {
+  var existingIdeaId = ideas[i].id;
   if(existingIdeaId == updatedIdeaId) {
-  existingIdeasObj[i].title = updatedIdeaTitle;
-  existingIdeasObj[i].body = updatedIdeaBody;
+  ideas[i].title = updatedIdeaTitle;
+  ideas[i].body = updatedIdeaBody;
 }
 }
-  var newIdeaString = JSON.stringify(existingIdeasObj);
-  localStorage.setItem('idea', newIdeaString);
+  setItemToLocalStorage();
 }
-
-function editIdea() {
-  $('h2, .body-text').keydown(function(e) {
-    if (e.which === 13) {
-      $(this).blur();
-    }
-  });
-};
 
 $('.searchBox').on('keyup',function() {
   var ideasSearch = document.querySelectorAll('.newIdeas');
