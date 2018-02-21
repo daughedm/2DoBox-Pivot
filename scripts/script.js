@@ -4,25 +4,19 @@ $('.second-section').on('click', '.delete-button', deleteIdea);
 $('.second-section').on('click', '.up-vote', upVote);
 $('.second-section').on('click', '.down-vote', downVote);
 $("form").change(enable);
+$('.list').on('input', saveIdeaUpdates)
+$(':input').parent().on('submit',formActions);
 
 $(document).ready(oldIdeas());
-console.log($(':input').parent())
 
-
-$('.list').on('input', function(event) {
-  saveIdeaUpdates(event);
-});
-
-// clone box with the user's input
-$(':input').parent().on('submit',function(e) {
+function formActions(e) {
   enable();
   e.preventDefault();
   cloneIdea();
   $(':input').parent().trigger('reset');
   $('.title-input').focus()
-});
+};
 
-// single responsibility, enables and dsiables the save button based on input fields.
 function enable() {
   if ($('.body-input').val() == "" && $('.title-input').val() == "") {
     setDisableAttribute();
@@ -33,17 +27,17 @@ function enable() {
 
 function removeDisableAttribute() {
   $("input[type=submit]").removeAttr('disabled');
-}
+};
 
 function setDisableAttribute() {
   $("input[type=submit").attr('disabled', '')
-}
+};
 
 function oldIdeas() {
   ideas.forEach(function(value, a) {
     prependExistingIdeas(value);
   })
-}
+};
 
 function cloneIdea() {
   var boxCopy = $('#idea-template').clone(true);
@@ -54,11 +48,11 @@ function cloneIdea() {
   $(boxCopy).removeAttr();
   $('.list').prepend(boxCopy);
   disableSave();
-}
+};
 
 function disableSave() {
   $("input[type=submit]").attr('disabled','disabled');
-}
+};
 
 function prependExistingIdeas(idea) {
   var boxCopy = $('#idea-template').clone(true);
@@ -67,7 +61,7 @@ function prependExistingIdeas(idea) {
   var importance = $(boxCopy).find('.qual-type').text(idea.importance);
   $(boxCopy).attr('id', idea.id);
   $('.list').prepend(boxCopy);
-}
+};
 
 function ideaStorage() {
   var idea = {}
@@ -78,7 +72,7 @@ function ideaStorage() {
   ideas.push(idea);
   setItemToLocalStorage();
   return idea;
-}
+};
 
 function deleteIdea(ev) {
   var buttonParent = ev.target.closest('.new-ideas');
@@ -88,9 +82,9 @@ function deleteIdea(ev) {
     if (existingIdeaId == buttonParent.id) {
         ideas.splice(i,1);
         setItemToLocalStorage();
-    }
-  }
-} 
+    };
+  };
+}; 
 
  function arrayImportance() {
   return [
@@ -100,7 +94,7 @@ function deleteIdea(ev) {
     'High',
     'Critical'
   ];
-}
+};
 
 function upVote() {
   var importance = arrayImportance()
@@ -110,11 +104,11 @@ function upVote() {
     myIndex++
     } else {
     myIndex = 4
-  } 
+  }; 
   var newImportance = $(this).parent().find('.qual-type').text(importance[myIndex]);
   var cardId = $(this).parents().closest('.new-ideas').attr('id')
   saveVote(cardId, newImportance);
-}
+};
 
 function downVote() {
   var importance = arrayImportance()
@@ -124,11 +118,11 @@ function downVote() {
     myIndex = 0
   } else {
     myIndex--
-  } 
+  }; 
   var newImportance = $(this).parent().find('.qual-type').text(importance[myIndex]);
   var cardId = $(this).parents().closest('.new-ideas').attr('id')
   saveVote(cardId, newImportance);
-}
+};
 
 function saveVote(cardId, newImportance) {
   var importance = arrayImportance()
@@ -136,14 +130,14 @@ function saveVote(cardId, newImportance) {
     var existingIdeaId = ideas[i].id;
     if(existingIdeaId == cardId) {
     ideas[i].importance = newImportance.text()
-  }
-}   
+  };
+};   
   setItemToLocalStorage();
-}
+};
 
 function setItemToLocalStorage() {
   localStorage.setItem('idea', JSON.stringify(ideas));
-}
+};
 
 function saveIdeaUpdates(ev) {
   var updatedIdea = ev.target.closest('.new-ideas');
@@ -151,14 +145,14 @@ function saveIdeaUpdates(ev) {
   var updatedIdeaBody = updatedIdea.querySelector('.example-body').innerText;
   var updatedIdeaId = updatedIdea.id;
   for(i = 0; i < ideas.length; i++) {
-  var existingIdeaId = ideas[i].id;
-  if(existingIdeaId == updatedIdeaId) {
-  ideas[i].title = updatedIdeaTitle;
-  ideas[i].body = updatedIdeaBody;
-}
-}
+    var existingIdeaId = ideas[i].id;
+    if(existingIdeaId == updatedIdeaId) {
+    ideas[i].title = updatedIdeaTitle;
+    ideas[i].body = updatedIdeaBody;
+    };
+  };
   setItemToLocalStorage();
-}
+};
 
 $('.search-box').on('keyup',function() {
   var ideasSearch = document.querySelectorAll('.new-ideas');
@@ -173,5 +167,5 @@ $('.search-box').on('keyup',function() {
     } else {
   $(this).hide();
   }  
-})
-})
+});
+});
