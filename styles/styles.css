@@ -169,7 +169,7 @@ textarea {
 }
 
 .delete-button {
-  display: inline-block;
+  /* display: inline-block; */
   flex:5%;
   float: right;
   z-index: 5;
@@ -177,7 +177,7 @@ textarea {
 
 .delete-button:hover {
   transition: 1s;
-  content: url('images/delete-hover.svg');
+  content: url('../images/delete-hover.svg');
 }
 
 .line-three {
@@ -188,12 +188,12 @@ textarea {
 
 .up-vote:hover {
   transition: 1s;
-  content: url('images/upvote-hover.svg');
+  content: url('../images/upvote-hover.svg');
 }
 
 .down-vote:hover {
   transition: 1s;
-  content: url('images/downvote-hover.svg');
+  content: url('../images/downvote-hover.svg');
 }
 
 .quality {
