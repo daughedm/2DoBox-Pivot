@@ -77,15 +77,15 @@ textarea {
   color:#c5c6c8;
 }
 
-#ideaTemplate {
+#idea-template {
   display: none;
 }
 
-.inputForm {
+.input-form {
   width: 100%;
 }
 
-.firstLine {
+.first-line {
   display:flex;
 }
 
@@ -95,13 +95,13 @@ textarea {
   width: 55%;
 }
 
-.ideaHeader {
+.idea-header {
   color: #00A79D;
   font-size: 70px;
   margin: 0;
 }
 
-.titleInput {
+.title-input {
   outline: none;
 }
 
@@ -114,13 +114,13 @@ textarea {
   margin:0;
 }
 
-.bodyInput {
+.body-input {
   margin-top: 20px;
   margin-bottom: 20px;
   outline: none;
 }
 
-.saveButton {
+.save-button {
   background-color: #00A79D;
   color: white;
   font-family: 'Open Sans', sans-serif;
@@ -129,12 +129,12 @@ textarea {
   width: 100%;
 }
 
-.saveButton:hover {
+.save-button:hover {
   background-color: #045E55;
   outline: none;
 }
 
-.saveButton:disabled {
+.save-button:disabled {
   opacity: 0.5;
   border: 2px solid #bdbfbf;
 }
@@ -151,19 +151,19 @@ textarea {
   width: 20px;
 }
 
-.secondSection {
+.second-section {
   box-sizing: border-box;
   display: block;
   height: 100%;
   margin-top: 75px;
 }
 
-.searchBox {
+.search-box {
   margin-bottom: 15px;
   outline: none;
 }
 
-.newIdeas {
+.new-ideas {
   border-bottom: #D1D3D4 solid 3px;
   margin-top: 30px;
 }
@@ -180,7 +180,7 @@ textarea {
   content: url('images/delete-hover.svg');
 }
 
-.lineThree {
+.line-three {
   display: flex;
   margin-bottom: 25px;
   width: 300px;
@@ -251,19 +251,19 @@ input {
   width: 80%;
 }
 
-.ideaHeader {
+.idea-header {
   font-size: 50px;
 }
 
-.saveButton {
+.save-button {
   padding: 5px;
 }
 
-.secondSection {
+.second-section {
   margin-top: 55px;
 }
 
-.lineThree {
+.line-three {
 width: 240px;
 }
 
