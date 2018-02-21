@@ -169,7 +169,6 @@ textarea {
 }
 
 .delete-button {
-  /* display: inline-block; */
   flex:5%;
   float: right;
   z-index: 5;
