@@ -1,9 +1,8 @@
-// var form = document.forms['inputForm'];
 var ideas = JSON.parse(localStorage.getItem('idea'));
 
-$('.secondSection').on('click', '.delete-button', deleteIdea);
-$('.secondSection').on('click', '.up-vote', upVote);
-$('.secondSection').on('click', '.down-vote', downVote);
+$('.second-section').on('click', '.delete-button', deleteIdea);
+$('.second-section').on('click', '.up-vote', upVote);
+$('.second-section').on('click', '.down-vote', downVote);
 $("form").change(enable);
 
 $(document).ready(oldIdeas());
@@ -20,12 +19,12 @@ $(':input').parent().on('submit',function(e) {
   e.preventDefault();
   cloneIdea();
   $(':input').parent().trigger('reset');
-  $('.titleInput').focus()
+  $('.title-input').focus()
 });
 
 // single responsibility, enables and dsiables the save button based on input fields.
 function enable() {
-  if ($('.bodyInput').val() == "" && $('.titleInput').val() == "") {
+  if ($('.body-input').val() == "" && $('.title-input').val() == "") {
     setDisableAttribute();
   } else {
     removeDisableAttribute();
@@ -47,7 +46,7 @@ function oldIdeas() {
 }
 
 function cloneIdea() {
-  var boxCopy = $('#ideaTemplate').clone(true);
+  var boxCopy = $('#idea-template').clone(true);
   var ideaObject = ideaStorage();
   var title = $(boxCopy).find('.title').text(ideaObject.title);
   var body = $(boxCopy).find('.example-body').text(ideaObject.body);
@@ -62,7 +61,7 @@ function disableSave() {
 }
 
 function prependExistingIdeas(idea) {
-  var boxCopy = $('#ideaTemplate').clone(true);
+  var boxCopy = $('#idea-template').clone(true);
   var title = $(boxCopy).find('.title').text(idea.title);
   var body = $(boxCopy).find('.example-body').text(idea.body);
   var importance = $(boxCopy).find('.qualType').text(idea.importance);
@@ -72,8 +71,8 @@ function prependExistingIdeas(idea) {
 
 function ideaStorage() {
   var idea = {}
-  idea.title = $('.titleInput').val();
-  idea.body = $('.bodyInput').val();
+  idea.title = $('.title-input').val();
+  idea.body = $('.body-input').val();
   idea.importance = 'Normal';
   idea.id = $.now();
   ideas.push(idea);
@@ -82,7 +81,7 @@ function ideaStorage() {
 }
 
 function deleteIdea(ev) {
-  var buttonParent = ev.target.closest('.newIdeas');
+  var buttonParent = ev.target.closest('.new-ideas');
   buttonParent.remove()
   for(i = 0; i < ideas.length; i++) {
     var existingIdeaId = ideas[i].id;
@@ -109,11 +108,11 @@ function upVote() {
   var myIndex = importance.indexOf(currentImportance)
   if (myIndex < importance.length - 1) {
     myIndex++
-  } else {
+    } else {
     myIndex = 4
   } 
   var newImportance = $(this).parent().find('.qualType').text(importance[myIndex]);
-  var cardId = $(this).parents().closest('.newIdeas').attr('id')
+  var cardId = $(this).parents().closest('.new-ideas').attr('id')
   saveVote(cardId, newImportance);
 }
 
@@ -127,7 +126,7 @@ function downVote() {
     myIndex--
   } 
   var newImportance = $(this).parent().find('.qualType').text(importance[myIndex]);
-  var cardId = $(this).parents().closest('.newIdeas').attr('id')
+  var cardId = $(this).parents().closest('.new-ideas').attr('id')
   saveVote(cardId, newImportance);
 }
 
@@ -147,7 +146,7 @@ function setItemToLocalStorage() {
 }
 
 function saveIdeaUpdates(ev) {
-  var updatedIdea = ev.target.closest('.newIdeas');
+  var updatedIdea = ev.target.closest('.new-ideas');
   var updatedIdeaTitle = updatedIdea.querySelector('.title').innerText;
   var updatedIdeaBody = updatedIdea.querySelector('.example-body').innerText;
   var updatedIdeaId = updatedIdea.id;
@@ -161,8 +160,8 @@ function saveIdeaUpdates(ev) {
   setItemToLocalStorage();
 }
 
-$('.searchBox').on('keyup',function() {
-  var ideasSearch = document.querySelectorAll('.newIdeas');
+$('.search-box').on('keyup',function() {
+  var ideasSearch = document.querySelectorAll('.new-ideas');
   var searchTerm = $(this).val().toLowerCase();
   $('li').each(function() {
   $(this).attr('ideasSearch', $(this).text().toLowerCase())
@@ -170,7 +169,7 @@ $('.searchBox').on('keyup',function() {
   $('li').each(function() {
     if($(this).filter('[ideasSearch *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1) {
   $(this).show();
-  $('#ideaTemplate').hide();
+  $('#idea-template').hide();
     } else {
   $(this).hide();
   }  
