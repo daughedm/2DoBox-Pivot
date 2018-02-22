@@ -1,4 +1,6 @@
-
+* {
+  box-sizing: border-box;
+}
 header {
   font-family: 'Roboto Slab', serif;
   margin-bottom: 20px;
@@ -38,6 +40,22 @@ img {
 
 button {
   border-style: none;
+    background-color: #FFF;
+    color: #00A79D;
+    border: solid 2px #00A79D;
+    font-family: 'Open Sans',
+    sans-serif;
+    font-size: 14px;
+    width: 120px;
+    height: 30px;
+   flex:5%;
+   float: right;
+   margin-left: 275px;
+}
+
+button:hover {
+  background-color: #00A79D;
+    color: #FFF;
 }
 
 label {
@@ -66,6 +84,10 @@ select {
   outline: none;
 }
 
+span {
+  display: inline-block;
+}
+
 textarea {
   border:none;
   font-family: 'Open Sans', sans-serif;
@@ -92,7 +114,7 @@ textarea {
 .wrapper {
   margin:10px auto;
   margin-top: 0;
-  width: 55%;
+  width: 50%;
 }
 
 .idea-header {
@@ -103,6 +125,7 @@ textarea {
 
 .title-input {
   outline: none;
+  width: 100%;
 }
 
 .title {
@@ -118,6 +141,7 @@ textarea {
   margin-top: 20px;
   margin-bottom: 20px;
   outline: none;
+  width: 100%;
 }
 
 .save-button {
@@ -161,6 +185,7 @@ textarea {
 .search-box {
   margin-bottom: 15px;
   outline: none;
+  width: 100%;
 }
 
 .new-ideas {
@@ -182,7 +207,14 @@ textarea {
 .line-three {
   display: flex;
   margin-bottom: 25px;
-  width: 300px;
+  width: 100%;
+}
+
+.up-vote {
+  display:inline-block;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  width: 30px;
 }
 
 .up-vote:hover {
@@ -201,11 +233,6 @@ textarea {
   margin:0;
 }
 
-.up-vote {
-  display:inline-block;
-  margin-bottom: 5px;
-  padding-right: 20px;
-}
 
 .down-vote {
   display: inline-block;
@@ -222,7 +249,12 @@ textarea {
 .hidden {
   display:none;
 }
+@media only screen and (max-width: 1100px) {
+.wrapper {
+  width: 65%;
+}
 
+}
 @media only screen and (max-width: 690px) {
 
 main {
