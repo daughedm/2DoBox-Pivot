@@ -5,7 +5,7 @@ $('.second-section').on('click', '.up-vote', upVote);
 $('.second-section').on('click', '.down-vote', downVote);
 $('.second-section').on('click', 'button', completedTodo);
 $("form").change(enable);
-$('.list').on('keydown', saveIdeaUpdates)
+$('.list').on('keydown', saveIdeaUpdates);
 $(':input').parent().on('submit',formActions);
 
 $(document).ready(oldIdeas());
@@ -15,7 +15,7 @@ function formActions(e) {
   e.preventDefault();
   cloneIdea();
   $(':input').parent().trigger('reset');
-  $('.title-input').focus()
+  $('.title-input').focus();
 };
 
 function enable() {
@@ -31,7 +31,7 @@ function removeDisableAttribute() {
 };
 
 function setDisableAttribute() {
-  $("input[type=submit").attr('disabled', '')
+  $("input[type=submit").attr('disabled', '');
 };
 
 function oldIdeas() {
@@ -79,7 +79,7 @@ function ideaStorage() {
 
 function deleteIdea(ev) {
   var buttonParent = ev.target.closest('.new-ideas');
-  buttonParent.remove()
+  buttonParent.remove();
   for(i = 0; i < ideas.length; i++) {
     var existingIdeaId = ideas[i].id;
     if (existingIdeaId == buttonParent.id) {
@@ -100,9 +100,9 @@ function deleteIdea(ev) {
 };
 
 function upVote() {
-  var importance = arrayImportance()
-  var currentImportance = $(this).parent().find('.qual-type').text()
-  var myIndex = importance.indexOf(currentImportance)
+  var importance = arrayImportance();
+  var currentImportance = $(this).parent().find('.qual-type').text();
+  var myIndex = importance.indexOf(currentImportance);
   if (myIndex < importance.length - 1) {
     myIndex++
     } else {
@@ -118,9 +118,9 @@ function downVote() {
   var currentImportance = $(this).parent().find('.qual-type').text()
   var myIndex = importance.indexOf(currentImportance)
   if (myIndex <= 0) {
-    myIndex = 0
+    myIndex = 0;
   } else {
-    myIndex--
+    myIndex--;
   }; 
   var newImportance = $(this).parent().find('.qual-type').text(importance[myIndex]);
   var cardId = $(this).parents().closest('.new-ideas').attr('id')
@@ -172,9 +172,9 @@ function saveIdeaUpdates(ev) {
   var updatedIdeaBody = updatedIdea.querySelector('.example-body');
   var updatedIdeaId = updatedIdea.id;
   if (ev.which === 13) {
-    ev.preventDefault()
+    ev.preventDefault();
     updatedIdeaBody.blur();
-    updatedIdeaTitle.blur()
+    updatedIdeaTitle.blur();
   }
   for(i = 0; i < ideas.length; i++) {
     var existingIdeaId = ideas[i].id;
