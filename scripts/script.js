@@ -143,11 +143,9 @@ function completedTodo() {
   completeBtn.toggleClass('button-complete');
   if (completeBtn.text() === 'Complete') {
     completeBtn.text('Completed');
-    ideas.complete = true;
     completeBtn.css('button-complete');
   } else {
     completeBtn.text('Complete');
-    ideas.complete = false;
   }
   var cardId = $(this).parents().closest('.new-ideas').attr('id')
   saveCompletedTodo(cardId);
