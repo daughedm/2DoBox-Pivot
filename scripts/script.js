@@ -60,6 +60,7 @@ function prependExistingIdeas(idea) {
   var title = $(boxCopy).find('.title').text(idea.title);
   var body = $(boxCopy).find('.example-body').text(idea.body);
   var importance = $(boxCopy).find('.qual-type').text(idea.importance);
+  var completed = $(boxCopy).find('button').text(idea.completed);
   $(boxCopy).attr('id', idea.id);
   $('.list').prepend(boxCopy);
 };
@@ -143,12 +144,25 @@ function completedTodo() {
   if (completeBtn.text() === 'Complete') {
     completeBtn.text('Completed');
     ideas.complete = true;
-    
+    completeBtn.css('button-complete');
   } else {
     completeBtn.text('Complete');
     ideas.complete = false;
   }
+  var cardId = $(this).parents().closest('.new-ideas').attr('id')
+  saveCompletedTodo(cardId);
+  
 };
+
+function saveCompletedTodo(cardId) {
+  for (i = 0; i < ideas.length; i++) {
+    var existingIdeaId = ideas[i].id;
+    if (existingIdeaId == cardId) {
+      ideas[i].complete = !ideas[i].complete;
+    };
+    setItemToLocalStorage();
+  }
+}
 
 function setItemToLocalStorage() {
   localStorage.setItem('idea', JSON.stringify(ideas));
