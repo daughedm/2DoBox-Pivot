@@ -1,8 +1,9 @@
-var ideas = JSON.parse(localStorage.getItem('idea'));
+var ideas = JSON.parse(localStorage.getItem('idea')) || [];
 
 $('.second-section').on('click', '.delete-button', deleteIdea);
 $('.second-section').on('click', '.up-vote', upVote);
 $('.second-section').on('click', '.down-vote', downVote);
+$('.second-section').on('click', 'button', completedTodo);
 $("form").change(enable);
 $('.list').on('keydown', saveIdeaUpdates)
 $(':input').parent().on('submit',formActions);
@@ -69,6 +70,7 @@ function ideaStorage() {
   idea.body = $('.body-input').val();
   idea.importance = 'Normal';
   idea.id = $.now();
+  idea.complete = false;
   ideas.push(idea);
   setItemToLocalStorage();
   return idea;
@@ -133,6 +135,19 @@ function saveVote(cardId, newImportance) {
   };
 };   
   setItemToLocalStorage();
+};
+
+function completedTodo() {
+  var completeBtn = $(this).parent().find('button');
+  completeBtn.toggleClass('button-complete');
+  if (completeBtn.text() === 'Complete') {
+    completeBtn.text('Completed');
+    ideas.complete = true;
+    
+  } else {
+    completeBtn.text('Complete');
+    ideas.complete = false;
+  }
 };
 
 function setItemToLocalStorage() {

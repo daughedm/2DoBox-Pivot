@@ -40,22 +40,26 @@ img {
 
 button {
   border-style: none;
-    background-color: #FFF;
-    color: #00A79D;
-    border: solid 2px #00A79D;
-    font-family: 'Open Sans',
-    sans-serif;
-    font-size: 14px;
-    width: 120px;
-    height: 30px;
-   flex:5%;
-   float: right;
-   margin-left: 275px;
+  background-color: #FFF;
+  color: #00A79D;
+  border: solid 2px #00A79D;
+  font-family: 'Open Sans',
+  sans-serif;
+  font-size: 14px;
+  width: 120px;
+  height: 30px;
+  flex:5%;
+  float: right;
+  margin-left: 275px;
 }
 
 button:hover {
+ cursor: pointer;
+} 
+
+.button-complete {
   background-color: #00A79D;
-    color: #FFF;
+  color: #FFF;
 }
 
 label {
@@ -266,12 +270,12 @@ input {
 }
 
 .hidden {
-    border: 2px solid #c2c6c7;
-    color: black;
-    display:inline-block;
-    font-size: 25px;
-    padding: 6px;
-    width: 98%;
+  border: 2px solid #c2c6c7;
+  color: black;
+  display:inline-block;
+  font-size: 25px;
+  padding: 6px;
+  width: 98%;
 }   
 
 .first{
