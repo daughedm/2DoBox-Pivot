@@ -4,7 +4,7 @@ $('.second-section').on('click', '.delete-button', deleteIdea);
 $('.second-section').on('click', '.up-vote', upVote);
 $('.second-section').on('click', '.down-vote', downVote);
 $("form").change(enable);
-$('.list').on('input', saveIdeaUpdates)
+$('.list').on('keydown', saveIdeaUpdates)
 $(':input').parent().on('submit',formActions);
 
 $(document).ready(oldIdeas());
@@ -140,20 +140,35 @@ function setItemToLocalStorage() {
 };
 
 function saveIdeaUpdates(ev) {
+  // submitEditOnEnter(ev)
+  
   var updatedIdea = ev.target.closest('.new-ideas');
-  var updatedIdeaTitle = updatedIdea.querySelector('.title').innerText;
-  var updatedIdeaBody = updatedIdea.querySelector('.example-body').innerText;
+  var updatedIdeaTitle = updatedIdea.querySelector('.title');
+  var updatedIdeaBody = updatedIdea.querySelector('.example-body');
   var updatedIdeaId = updatedIdea.id;
+  if (ev.which === 13) {
+    ev.preventDefault()
+    updatedIdeaBody.blur();
+    updatedIdeaTitle.blur()
+  console.log('hey bud')
+  }
   for(i = 0; i < ideas.length; i++) {
     var existingIdeaId = ideas[i].id;
     if(existingIdeaId == updatedIdeaId) {
-    ideas[i].title = updatedIdeaTitle;
-    ideas[i].body = updatedIdeaBody;
+    ideas[i].title = updatedIdeaTitle.innerText;
+    ideas[i].body = updatedIdeaBody.innerText;
     };
   };
   setItemToLocalStorage();
 };
 
+// function submitEditOnEnter(ev) {
+//   $('.list').input(function(ev) {
+//     if (ev.which === 13) {
+//       $(this).blur();
+//     }
+//   });
+// }
 $('.search-box').on('keyup',function() {
   var ideasSearch = document.querySelectorAll('.new-ideas');
   var searchTerm = $(this).val().toLowerCase();
