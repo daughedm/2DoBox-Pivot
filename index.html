@@ -12,12 +12,12 @@
     <main>
       <div role="tablist" class="wrapper">
         <header>
-          <h1 role="heading" class="idea-header">2Do<b>Box</b></h1>
+          <h1 aria-label="To do box" role="heading" class="idea-header">2Do<b>Box</b></h1>
     </header>
-      <form role="tab" id="input-form">
-        <input role="tab" class="title-input" type="text" placeholder="Title" required/>
-        <input role="tab" class="body-input"  type="text" placeholder="Task" required/>
-        <input role="tab" class="save-button" type = "submit" value="save" disabled></input>
+      <form role="form" id="input-form">
+        <input class="title-input" type="text" placeholder="Title" aria-required="true" required/>
+        <input class="body-input"  type="text" placeholder="Task" aria-required="true" required/>
+        <input class="save-button" type="submit" value="save" disabled></input>
       </form>
     <section class="second-section">
       <input type="text" placeholder="Filter" class="search-box">
@@ -25,15 +25,16 @@
         <li id="idea-template" class="new-ideas">
           <div class = "first-line">
             <div contenteditable="true" class="title" id="editable-title" rows="1"></div>
-            <img role="tab" class="delete-button" src="images/delete.svg">
+            <img role="tab" class="delete-button" src="images/delete.svg" alt="delete button">
             <br>
           </div>
           <div contenteditable="true" class="example-body" rows="2"></div>
             <br>
             <div role="tablist" class="line-three">
-              <img role="tab" class="up-vote" src="images/upvote.svg">
-              <img role="tab" class="down-vote" src="images/downvote.svg">
-              <p role="tab" class="quality" id="quality-tag">importance: <span role="tab" class="qual-type">Normal</span></p>
+              <img role="button" class="up-vote" src="images/upvote.svg" alt="delete button">
+              <img role="button"  class="down-vote" src="images/downvote.svg" alt="delete button">
+              <p role="button" class="quality" id="quality-tag">importance: <span aria-label="Importance level" class="qual-type">Normal</span></p>
+              <button>Complete</button>
            </div>
         </li>
       </ul>
